@@ -1,18 +1,49 @@
 #importLibraries
+import os.path
+import tensorflow as tf
 from tensorflow.keras.models import load_model
 from conf import myConfig as config
 import cv2
 import numpy as np
+from skimage.metrics import peak_signal_noise_ratio as psnr
+from skimage.metrics import structural_similarity as ssim
 import argparse
 from pathlib import Path
 import tensorflow.keras.backend as K
+from matplotlib import pyplot as plt
+import scipy.io
+from scipy import ndimage
+import hdf5storage
+from tifffile import imwrite
 from utils import utils_image as util
+from PIL import Image
+import skimage.feature
 
+# custom filter
+def my_Hfilter(shape, dtype=None):
+
+    f = np.array([
+            [[[-1]], [[0]], [[1]]],
+            [[[-2]], [[0]], [[2]]],
+            [[[-1]], [[0]], [[1]]]
+        ])
+    assert f.shape == shape
+    return K.variable(f, dtype='float32')
+    
+def my_Vfilter(shape, dtype=None):
+
+    f = np.array([
+            [[[-1]], [[-2]], [[-1]]],
+            [[[0]], [[0]], [[0]]],
+            [[[1]], [[2]], [[1]]]
+        ])
+    assert f.shape == shape
+    return K.variable(f, dtype='float32')
 
 #ParsingArguments
 parser=argparse.ArgumentParser()
-parser.add_argument('--dataPath',dest='dataPath',type=str,default='./Testing_data/BSD68',help='testDataPath')
-parser.add_argument('--weightsPath',dest='weightsPath',type=str,default='./Pretrained_models/MFEBDN_Gray.h5',help='pathOfTrainedCNN')
+parser.add_argument('--dataPath',dest='dataPath',type=str,default='./Set12/',help='testDataPath')
+parser.add_argument('--weightsPath',dest='weightsPath',type=str,default='./GBGNRNet_Gray.h5',help='pathOfTrainedCNN')
 args=parser.parse_args()
 #createModel, loadWeights
 def custom_loss(y_true,y_pred): #this is required for loading a keras-model created with custom-loss
@@ -20,7 +51,7 @@ def custom_loss(y_true,y_pred): #this is required for loading a keras-model crea
     res=K.sum(diff*diff)/(2*config.batch_size)
     return res
 
-nmodel_PROPOSED=load_model(args.weightsPath,custom_objects={'custom_loss':custom_loss})
+nmodel_PROPOSED=load_model(args.weightsPath,custom_objects={'my_Hfilter': my_Hfilter,'my_Vfilter': my_Vfilter,'custom_loss':custom_loss})
 print('Trained Model is loaded')
 
 #createArrayOfTestImages
@@ -33,7 +64,7 @@ for path in listPaths:
 imgTestArray=np.array(imgTestArray)/255.
 
 noise_level_img = 25             # noise level for noisy image
-lenth=68
+lenth=12
 sumPSNR=0
 sumSSIM=0
 psnr_val=np.empty(lenth)
@@ -45,9 +76,16 @@ for i in range(0,lenth):
     error=nmodel_PROPOSED.predict(np.expand_dims(f,axis=0))
     predClean=f-np.squeeze(error)
     z=(predClean)
-    cv2.imwrite("./Test_Results/Gray/"+str(i+1)+"_Original.png",255.*img1)
-    cv2.imwrite("./Test_Results/Gray/"+str(i+1)+"_Noisy.png",255.*f)
-    cv2.imwrite("./Test_Results/Gray/"+str(i+1)+"_MFEBDN_Gray.png",255.*z)
+    cv2.imwrite("./Result/"+str(i+1)+"_Original.png",255.*img1)
+    cv2.imwrite("./Result/"+str(i+1)+"_Proposed.png",255.*z)
+    cv2.imwrite("./Result/"+str(i+1)+"_Noisy.png",255.*f)
+    # cv2.imwrite("./Result/"+str(i+1)+"_Noise_Component.png",255.*f-255.*z)
+    # plt.imshow(f, cmap='gray', interpolation='nearest')
+    # plt.axis('off')
+    # plt.show()
+    # plt.imshow(z, cmap='gray', interpolation='nearest')
+    # plt.axis('off')
+    # plt.show()
     psnr_val[i]=util.calculate_psnr(255.*z,255.*img1)
     ssim_val[i]=util.calculate_ssim(255.*z,255.*img1)
     print('PSNR of image '+str(i+1)+' is ',psnr_val[i])
