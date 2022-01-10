@@ -7,6 +7,6 @@ To test for blind gray denoising using GBGNRNet write:
 
 python Test_gray.py
 
-The resultant images will be stored in 'Test_Results/Gray/'
+The resultant images will be stored in 'Result/'
 
 Image wise PSNR & SSIM as well as Average PSNR & Average SSIM for the whole image database is also displayed in the console as output.
