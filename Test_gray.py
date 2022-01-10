@@ -42,8 +42,8 @@ def my_Vfilter(shape, dtype=None):
 
 #ParsingArguments
 parser=argparse.ArgumentParser()
-parser.add_argument('--dataPath',dest='dataPath',type=str,default='./Set12/',help='testDataPath')
-parser.add_argument('--weightsPath',dest='weightsPath',type=str,default='./GBGNRNet_Gray.h5',help='pathOfTrainedCNN')
+parser.add_argument('--dataPath',dest='dataPath',type=str,default='./Testing_data/BSD68/',help='testDataPath')
+parser.add_argument('--weightsPath',dest='weightsPath',type=str,default='./Pretrained_models/GBGNRNet_Gray.h5',help='pathOfTrainedCNN')
 args=parser.parse_args()
 #createModel, loadWeights
 def custom_loss(y_true,y_pred): #this is required for loading a keras-model created with custom-loss
@@ -64,7 +64,7 @@ for path in listPaths:
 imgTestArray=np.array(imgTestArray)/255.
 
 noise_level_img = 25             # noise level for noisy image
-lenth=12
+lenth=68
 sumPSNR=0
 sumSSIM=0
 psnr_val=np.empty(lenth)
@@ -79,13 +79,6 @@ for i in range(0,lenth):
     cv2.imwrite("./Result/"+str(i+1)+"_Original.png",255.*img1)
     cv2.imwrite("./Result/"+str(i+1)+"_Proposed.png",255.*z)
     cv2.imwrite("./Result/"+str(i+1)+"_Noisy.png",255.*f)
-    # cv2.imwrite("./Result/"+str(i+1)+"_Noise_Component.png",255.*f-255.*z)
-    # plt.imshow(f, cmap='gray', interpolation='nearest')
-    # plt.axis('off')
-    # plt.show()
-    # plt.imshow(z, cmap='gray', interpolation='nearest')
-    # plt.axis('off')
-    # plt.show()
     psnr_val[i]=util.calculate_psnr(255.*z,255.*img1)
     ssim_val[i]=util.calculate_ssim(255.*z,255.*img1)
     print('PSNR of image '+str(i+1)+' is ',psnr_val[i])
