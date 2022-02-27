@@ -87,5 +87,5 @@ for i in range(0,lenth):
     sumSSIM=sumSSIM+ssim_val[i]
 avgPSNR=sumPSNR/lenth
 avgSSIM=sumSSIM/lenth
-print('avgPSNR on Set5 dataset = ',avgPSNR)
-print('avgSSIM on Set5 dataset = ',avgSSIM)
+print('avgPSNR on dataset = ',avgPSNR)
+print('avgSSIM on dataset = ',avgSSIM)
