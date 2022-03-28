@@ -1,5 +1,5 @@
 # GBGNRNet
-This repo contains the KERAS implementation of "Gradient based Blind Gaussian Noise Removal Network using Multi-Scale Feature Information(GBGNRNet)"
+This repo contains the KERAS implementation of "Gradient and Multi Scale Feature Inspired Deep Blind Gaussian Denoiser"
 
 # Run Experiments
 
