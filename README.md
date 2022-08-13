@@ -17,9 +17,9 @@ To train the GBGNRNet denoising network, first download the clean image training
 
 Then run the GBGNRNet model file using:
 
-python GBGNRNet_gray.py
+python GBGNRNet_Gray.py
 
-This will save the 'GBGNRNet_gray.h5' file of in the folder 'Pretrained_models/'.
+This will save the 'GBGNRNet_Gray.h5' file of in the folder 'Pretrained_models/'.
 
 # Citation
 @article{thakur2022gradient,
