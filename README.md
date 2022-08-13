@@ -21,6 +21,12 @@ python GBGNRNet_Gray.py
 
 This will save the 'GBGNRNet_Gray.h5' file in the folder 'Pretrained_models/'.
 
+# GBGNRNet image denoising visual comparison
+
+![Screenshot 2022-08-13 at 5 02 02 PM](https://user-images.githubusercontent.com/89151608/184490258-efa08c8b-35eb-4cb6-8376-ab4f75333ed8.png)
+![Screenshot 2022-08-13 at 5 02 36 PM](https://user-images.githubusercontent.com/89151608/184490307-ea9f5a0e-084e-4442-9537-91e03fd4667c.png)
+![Screenshot 2022-08-13 at 5 03 07 PM](https://user-images.githubusercontent.com/89151608/184490382-5a68f0ed-b9aa-4028-8cb9-e9dda1ce77f8.png)
+
 # Citation
 @article{thakur2022gradient,
   title={Gradient and Multi Scale Feature Inspired Deep Blind Gaussian Denoiser},
