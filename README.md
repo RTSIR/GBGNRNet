@@ -19,7 +19,7 @@ Then run the GBGNRNet model file using:
 
 python GBGNRNet_Gray.py
 
-This will save the 'GBGNRNet_Gray.h5' file of in the folder 'Pretrained_models/'.
+This will save the 'GBGNRNet_Gray.h5' file in the folder 'Pretrained_models/'.
 
 # Citation
 @article{thakur2022gradient,
