@@ -13,7 +13,11 @@ Image wise PSNR & SSIM as well as Average PSNR & Average SSIM for the whole imag
 
 # Train GBGNRNet denoising network
 
-To train the GBGNRNet denoising network, first download the clean image training patch from [here](https://drive.google.com/file/d/1GjNTNadXaTgruckfq8tTY7Vu8fK8zDj9/view?usp=sharing) and copy the 'img_clean_pats.npy' in the folder 'trainingPatch/'
+To train the GBGNRNet denoising network, first download the [BSD400 dataset]([http://weegee.vision.ucmerced.edu/datasets/landuse.html](https://github.com/smartboy110/denoising-datasets/tree/main/BSD400)). Then generate the training data using:
+
+python Generate_Patches_Gray.py
+
+This will save the training patch 'img_clean_pats.npy' in the folder 'trainingPatch/'
 
 Then run the GBGNRNet model file using:
 
