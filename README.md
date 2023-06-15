@@ -13,7 +13,7 @@ Image wise PSNR & SSIM as well as Average PSNR & Average SSIM for the whole imag
 
 # Train GBGNRNet denoising network
 
-To train the GBGNRNet denoising network, first download the [BSD400 dataset](https://github.com/smartboy110/denoising-datasets/tree/main/BSD400). Then generate the training data using:
+To train the GBGNRNet denoising network, first download the [BSD400 dataset](https://github.com/smartboy110/denoising-datasets/tree/main/BSD400) and save this dataset inside the main folder of this project. Then generate the training data using:
 
 python Generate_Patches_Gray.py
 
